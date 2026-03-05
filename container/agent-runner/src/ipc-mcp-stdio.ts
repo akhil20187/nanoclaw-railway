@@ -45,11 +45,13 @@ server.tool(
   {
     text: z.string().describe('The message text to send'),
     sender: z.string().optional().describe('Your role/identity name (e.g. "Researcher"). When set, messages appear from a dedicated bot in Telegram.'),
+    target_jid: z.string().optional().describe('(Main group only) Send to a different channel by JID (e.g. "slack:C0AJNNTQD1U", "tg:-1001234567890"). Defaults to the current group. Check available_groups.json or the registered_groups DB table for JIDs.'),
   },
   async (args) => {
+    const targetJid = isMain && args.target_jid ? args.target_jid : chatJid;
     const data: Record<string, string | undefined> = {
       type: 'message',
-      chatJid,
+      chatJid: targetJid,
       text: args.text,
       sender: args.sender || undefined,
       groupFolder,

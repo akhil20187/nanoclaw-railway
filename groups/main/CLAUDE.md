@@ -18,6 +18,8 @@ Your output is sent to the user or group.
 
 You also have `mcp__nanoclaw__send_message` which sends a message immediately while you're still working. This is useful when you want to acknowledge a request before starting longer work.
 
+As the main group, you can send messages to **any registered channel** by passing the `target_jid` parameter (e.g. `target_jid: "slack:C0AJNNTQD1U"`). Check `available_groups.json` or the `registered_groups` table for JIDs.
+
 ### Internal thoughts
 
 If part of your output is internal reasoning rather than something for the user, wrap it in `<internal>` tags:
