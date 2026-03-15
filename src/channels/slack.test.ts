@@ -799,7 +799,7 @@ describe('SlackChannel', () => {
       });
 
       expect(() => new SlackChannel(createTestOpts())).toThrow(
-        'SLACK_BOT_TOKEN and SLACK_APP_TOKEN must be set in .env',
+        'SLACK_BOT_TOKEN and SLACK_APP_TOKEN must be set',
       );
     });
 
@@ -810,7 +810,7 @@ describe('SlackChannel', () => {
       });
 
       expect(() => new SlackChannel(createTestOpts())).toThrow(
-        'SLACK_BOT_TOKEN and SLACK_APP_TOKEN must be set in .env',
+        'SLACK_BOT_TOKEN and SLACK_APP_TOKEN must be set',
       );
     });
   });
