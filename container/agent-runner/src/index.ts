@@ -539,9 +539,16 @@ async function main(): Promise<void> {
     process.exit(1);
   }
 
-  // Credentials are injected by the host's credential proxy via ANTHROPIC_BASE_URL.
-  // No real secrets exist in the container environment.
+  // In Docker mode: credentials are injected by the host's credential proxy via ANTHROPIC_BASE_URL.
+  // On Railway: no credential proxy runs — secrets arrive via the stdin JSON payload instead.
+  // Apply them to sdkEnv so the Claude CLI subprocess can authenticate.
   const sdkEnv: Record<string, string | undefined> = { ...process.env };
+  const stdinSecrets = (containerInput as unknown as Record<string, unknown>).secrets as Record<string, string> | undefined;
+  if (stdinSecrets) {
+    for (const [key, value] of Object.entries(stdinSecrets)) {
+      if (value) sdkEnv[key] = value;
+    }
+  }
 
   const __dirname = path.dirname(fileURLToPath(import.meta.url));
   const mcpServerPath = path.join(__dirname, 'ipc-mcp-stdio.js');
