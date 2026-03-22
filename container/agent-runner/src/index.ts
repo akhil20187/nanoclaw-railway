@@ -460,7 +460,10 @@ async function runQuery(
         'WebSearch', 'WebFetch',
         'Task', 'TaskOutput', 'TaskStop',
         'TeamCreate', 'TeamDelete', 'SendMessage',
-        'TodoWrite', 'ToolSearch', 'Skill',
+        'TodoWrite',
+        // ENABLE_TOOL_SEARCH defaults to enabled; set to '0' or 'false' to disable
+        ...((sdkEnv['ENABLE_TOOL_SEARCH'] ?? '1') !== '0' && sdkEnv['ENABLE_TOOL_SEARCH'] !== 'false' ? ['ToolSearch'] : []),
+        'Skill',
         'NotebookEdit',
         'mcp__nanoclaw__*',
         ...extraMcpToolPatterns,
