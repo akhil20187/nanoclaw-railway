@@ -8,6 +8,7 @@ import {
   IS_RAILWAY,
   POLL_INTERVAL,
   SLACK_MAIN_CHANNEL_ID,
+  TELEGRAM_MAIN_CHAT_ID,
   TIMEZONE,
   TRIGGER_PATTERN,
 } from './config.js';
@@ -684,6 +685,16 @@ async function main(): Promise<void> {
       );
     }
 
+    // Priority 1.5: TELEGRAM_MAIN_CHAT_ID — directly register a Telegram chat as main
+    if (!mainJid && TELEGRAM_MAIN_CHAT_ID) {
+      mainJid = `tg:${TELEGRAM_MAIN_CHAT_ID}`;
+      mainName = ASSISTANT_NAME;
+      logger.info(
+        { chatId: TELEGRAM_MAIN_CHAT_ID },
+        'Using TELEGRAM_MAIN_CHAT_ID for main group',
+      );
+    }
+
     // Priority 2: Match ASSISTANT_NAME against chat names
     if (!mainJid) {
       const allChats = getAllChats();
@@ -700,7 +711,7 @@ async function main(): Promise<void> {
           .slice(0, 20);
         logger.warn(
           { assistantName: ASSISTANT_NAME, availableChats: chatNames },
-          'No group matching ASSISTANT_NAME found. Set SLACK_MAIN_CHANNEL_ID, or create a group named after your bot, send a message, then restart.',
+          'No group matching ASSISTANT_NAME found. Set SLACK_MAIN_CHANNEL_ID (Slack) or TELEGRAM_MAIN_CHAT_ID (Telegram), or create a group named after your bot, send a message, then restart.',
         );
       }
     }
