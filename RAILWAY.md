@@ -16,7 +16,7 @@ All five channels (Slack, Telegram, Discord, WhatsApp, Gmail) are pre-installed.
 
 ## Dependencies
 
-- An Anthropic API key (`ANTHROPIC_API_KEY`)
+- An Anthropic API key (`ANTHROPIC_API_KEY`), and optionally a custom API base URL (`ANTHROPIC_BASE_URL`)
 - At least one channel's credentials (see [Available Channels](#available-channels) below)
 
 ### Deployment Dependencies
@@ -29,6 +29,7 @@ All five channels (Slack, Telegram, Discord, WhatsApp, Gmail) are pre-installed.
 | Variable | Required | Description |
 |----------|----------|-------------|
 | `ANTHROPIC_API_KEY` | Yes | API key for Claude model access |
+| `ANTHROPIC_BASE_URL` | No | Custom Anthropic API base URL (default: `https://api.anthropic.com`). Use this to point to a proxy, a compatible third-party endpoint, or a self-hosted model gateway. |
 | `ASSISTANT_NAME` | No | Bot display name (default: `Andy`). Also used to auto-register the main group: on first startup, the bot looks for a chat matching this name and registers it as the main group. |
 | `TZ` | No | Timezone for scheduled tasks and log timestamps (default: `UTC`) |
 | `GITHUB_TOKEN` | No | GitHub personal access token for installing skills from private repos |
